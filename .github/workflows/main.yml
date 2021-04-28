@@ -1,8 +1,6 @@
 name: deltweeter
 
-on:
-  schedule:
-    - cron: '40 7 * * *' # runs at 12:00 UTC everyday
+on: push
 
 jobs:
   build:
