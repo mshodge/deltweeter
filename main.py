@@ -8,9 +8,9 @@ import os
 days_to_delete_after = 30
 
 consumer_key = os.environ['TWITTER_API_KEY']
-consumer_secret = os.environ.get(TWITTER_API_SECRET_KEY)
-access_token = os.environ.get(ACCESS_TOKEN)
-access_token_secret = os.environ.get(ACCESS_TOKEN_SECRET)
+consumer_secret = os.environ['TWITTER_API_SECRET_KEY']
+access_token = os.environ['ACCESS_TOKEN']
+access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
