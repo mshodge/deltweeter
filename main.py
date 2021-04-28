@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import os
 
 # options
-days_to_delete_after = 31
+days_to_delete_after = 30
 
 consumer_key = os.environ['TWITTER_API_KEY']
 consumer_secret = os.environ.get(TWITTER_API_SECRET_KEY)
