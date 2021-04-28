@@ -2,7 +2,7 @@ name: deltweeter
 
 on:
   schedule:
-    - cron: '12 * * * *' # runs at 12:00 UTC everyday
+    - cron: '9 * * * *' # runs at 12:00 UTC everyday
 
 jobs:
   build:
