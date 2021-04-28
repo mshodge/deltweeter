@@ -7,7 +7,7 @@ import os
 # options
 days_to_delete_after = 31
 
-consumer_key = os.environ.get(TWITTER_API_KEY)
+consumer_key = os.environ['TWITTER_API_KEY']
 consumer_secret = os.environ.get(TWITTER_API_SECRET_KEY)
 access_token = os.environ.get(ACCESS_TOKEN)
 access_token_secret = os.environ.get(ACCESS_TOKEN_SECRET)
