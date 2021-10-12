@@ -2,7 +2,6 @@
 
 # standard libs
 from datetime import datetime, timedelta, timezone
-import pytz
 import os
 
 # third-party libs
