@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # standard libs
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 
 # third-party libs
@@ -26,7 +26,7 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 # set cutoff date, use utc to match twitter
-cutoff_date = datetime.utcnow() - timedelta(days=days_to_delete_after)
+cutoff_date = datetime.now(timezone.utc) - timedelta(days=days_to_delete_after)
 
 # Get users timeline (tweets)
 timeline = tweepy.Cursor(api.user_timeline).items()
