@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 import os
 
 # third-party libs
+import pytz
 import tweepy
 
 # variables
@@ -27,13 +28,16 @@ api = tweepy.API(auth)
 
 # set cutoff date, use utc to match twitter
 cutoff_date = datetime.now() - timedelta(days=days_to_delete_after)
+timezone = pytz.timezone("Europe/London")
+cutoff_date = timezone.localize(cutoff_date)
+
 
 # Get users timeline (tweets)
 timeline = tweepy.Cursor(api.user_timeline).items()
 
 # Deletes tweets
 for tweet in timeline:
-	if tweet.created_at < cutoff_date:
+	if timezone.localize(tweet.created_at) < cutoff_date:
 		api.destroy_status(tweet.id)
 		deletion_count += 1
 print(f"{deletion_count} tweets happened before {cutoff_date.date()}, these have now been deleted")
@@ -42,7 +46,7 @@ print(f"{deletion_count} tweets happened before {cutoff_date.date()}, these have
 favorites = tweepy.Cursor(api.favorites).items()
 
 for tweet in favorites:
-	if tweet.created_at < cutoff_date:
+	if timezone.localize(tweet.created_at) < cutoff_date:
 		api.destroy_favorite(tweet.id)
 		unlike_count += 1
 print(f"{unlike_count} likes happened before {cutoff_date.date()}, these have now been unliked")
