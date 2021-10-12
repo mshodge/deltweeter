@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 # standard libs
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import os
 
 # third-party libs
-import pytz
 import tweepy
 
 # variables
@@ -27,17 +26,14 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 # set cutoff date, use utc to match twitter
-cutoff_date = datetime.now() - timedelta(days=days_to_delete_after)
-timezone = pytz.timezone("Europe/London")
-cutoff_date = timezone.localize(cutoff_date)
-
+cutoff_date = datetime.utcnow() - timedelta(days=days_to_delete_after)
 
 # Get users timeline (tweets)
 timeline = tweepy.Cursor(api.user_timeline).items()
 
 # Deletes tweets
 for tweet in timeline:
-	if timezone.localize(tweet.created_at) < cutoff_date:
+	if tweet.created_at < cutoff_date:
 		api.destroy_status(tweet.id)
 		deletion_count += 1
 print(f"{deletion_count} tweets happened before {cutoff_date.date()}, these have now been deleted")
@@ -46,7 +42,7 @@ print(f"{deletion_count} tweets happened before {cutoff_date.date()}, these have
 favorites = tweepy.Cursor(api.favorites).items()
 
 for tweet in favorites:
-	if timezone.localize(tweet.created_at) < cutoff_date:
+	if tweet.created_at < cutoff_date:
 		api.destroy_favorite(tweet.id)
 		unlike_count += 1
 print(f"{unlike_count} likes happened before {cutoff_date.date()}, these have now been unliked")
