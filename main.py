@@ -33,7 +33,7 @@ timeline = tweepy.Cursor(api.user_timeline).items()
 
 # Deletes tweets
 for tweet in timeline:
-	if tweet.created_at < cutoff_date:
+	if tweet.created_at.replace(tzinfo=utc) < cutoff_date.replace(tzinfo=utc):
 		api.destroy_status(tweet.id)
 		deletion_count += 1
 print(f"{deletion_count} tweets happened before {cutoff_date.date()}, these have now been deleted")
@@ -42,7 +42,7 @@ print(f"{deletion_count} tweets happened before {cutoff_date.date()}, these have
 favorites = tweepy.Cursor(api.favorites).items()
 
 for tweet in favorites:
-	if tweet.created_at < cutoff_date:
+	if tweet.created_at.replace(tzinfo=utc) < cutoff_date.replace(tzinfo=utc):
 		api.destroy_favorite(tweet.id)
 		unlike_count += 1
 print(f"{unlike_count} likes happened before {cutoff_date.date()}, these have now been unliked")
